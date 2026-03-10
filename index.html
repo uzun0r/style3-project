@@ -8,7 +8,35 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="style3.css">
     <style>
-        /* Адаптивные правки только для блока сложности обучения */
+        /* Адаптация для мобильных устройств — блок сложности обучения */
+@media (max-width: 768px) {
+    .difficulty-labels {
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 10px !important;
+        margin-top: 20px !important;
+        width: 100% !important;
+    }
+
+    .difficulty-label {
+        width: 100% !important;
+        margin: 0 !important;
+        padding: 12px 15px !important;
+        background: rgba(255, 255, 255, 0.9) !important;
+        border: 1px solid rgba(155, 185, 224, 0.3) !important;
+        border-radius: 12px !important;
+        box-sizing: border-box !important;
+        text-align: left !important;
+    }
+
+    /* Если подписи были в ряд, убираем лишние отступы */
+    .difficulty-labels > * {
+        flex: none !important;
+        width: 100% !important;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+    }
+}
         @media (max-width: 768px) {
             .difficulty-labels {
                 display: flex;
@@ -682,4 +710,5 @@
 </body>
 </html>
 ```
+
 
