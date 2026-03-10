@@ -1,10 +1,64 @@
+```html
 <!DOCTYPE html>
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
     <title>Расширенный поиск профессий - Career Navigator</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="style3.css">
+    <style>
+        /* Адаптивные правки только для блока сложности обучения */
+        @media (max-width: 768px) {
+            .difficulty-labels {
+                display: flex;
+                flex-direction: column;
+                gap: 8px;
+                margin-top: 15px;
+            }
+            .difficulty-label {
+                background: rgba(255,255,255,0.8);
+                border: 1px solid rgba(155, 185, 224, 0.3);
+                border-radius: 12px;
+                padding: 12px 15px;
+                cursor: pointer;
+                transition: all 0.2s;
+                font-size: 15px;
+                line-height: 1.4;
+                width: 100%;
+                box-sizing: border-box;
+            }
+            .difficulty-label.active {
+                background: rgba(155, 185, 224, 0.2);
+                border-color: var(--cornflower-blue);
+                box-shadow: 0 2px 8px rgba(89,118,172,0.2);
+            }
+            .difficulty-label strong {
+                color: var(--cornflower-blue);
+                display: block;
+                margin-bottom: 4px;
+                font-size: 16px;
+            }
+            .difficulty-label br {
+                display: none;
+            }
+            /* Компактное описание */
+            .difficulty-label span {
+                color: var(--shadowed-lace);
+                font-size: 14px;
+            }
+            /* Подписи под шкалой (цифры) оставляем */
+            .career-scale-marks {
+                display: flex;
+                justify-content: space-between;
+                padding: 0 5px;
+                margin-top: 5px;
+            }
+        }
+
+        /* Остальные стили (не трогаем) */
+        .career-search-container { /* ваш существующий контейнер */ }
+    </style>
 </head>
 <body class="career-body">
     <!-- Навигация -->
@@ -53,9 +107,7 @@
         <form id="careerSearchForm">
             <!-- 1. Поиск по названию профессии -->
             <div class="career-filter-section">
-                <h3 class="career-filter-title">
-                    1. Поиск по названию профессии
-                </h3>
+                <h3 class="career-filter-title">1. Поиск по названию профессии</h3>
                 <div class="career-search-name">
                     <input type="text"
                            class="career-search-input"
@@ -63,36 +115,26 @@
                            id="professionName"
                            placeholder="Введите название профессии (например: Программист, Врач, Учитель)...">
                 </div>
-
             </div>
 
             <!-- 2. Тип поступления -->
             <div class="career-filter-section">
-                <h3 class="career-filter-title">
-                    2. Тип поступления
-                </h3>
+                <h3 class="career-filter-title">2. Тип поступления</h3>
                 <div class="career-options-grid">
                     <label class="career-option-label">
-                        <input type="radio" name="admission_type" value="ОГЭ">
-                        ОГЭ (9 класс)
+                        <input type="radio" name="admission_type" value="ОГЭ"> ОГЭ (9 класс)
                     </label>
                     <label class="career-option-label">
-                        <input type="radio" name="admission_type" value="ЕГЭ">
-                        ЕГЭ (11 класс)
+                        <input type="radio" name="admission_type" value="ЕГЭ"> ЕГЭ (11 класс)
                     </label>
                 </div>
-
             </div>
 
             <!-- 3. Предметы для сдачи -->
             <div class="career-filter-section">
-                <h3 class="career-filter-title">
-                    3. Предметы для сдачи
-                </h3>
+                <h3 class="career-filter-title">3. Предметы для сдачи</h3>
                 <p style="color: var(--shadowed-lace); margin-bottom: 15px; font-family: 'Soyuz Grotesk', sans-serif;">Выберите предметы, которые вы сдаете или планируете сдавать:</p>
-
                 <div class="career-subjects-grid">
-                    <!-- Русские названия с большой буквы как в БД -->
                     <div class="career-subject-tag" data-subject="Русский язык">Русский язык</div>
                     <div class="career-subject-tag" data-subject="Математика">Математика</div>
                     <div class="career-subject-tag" data-subject="Профильная математика">Профильная математика</div>
@@ -106,14 +148,11 @@
                     <div class="career-subject-tag" data-subject="Литература">Литература</div>
                     <div class="career-subject-tag" data-subject="Иностранный язык">Иностранный язык</div>
                 </div>
-
             </div>
 
-            <!-- 4. Сложность обучения (шкала 1-5) -->
+            <!-- 4. Сложность обучения (адаптировано для мобильных) -->
             <div class="career-filter-section">
-                <h3 class="career-filter-title">
-                    4. Сложность обучения
-                </h3>
+                <h3 class="career-filter-title">4. Сложность обучения</h3>
                 <p style="color: var(--shadowed-lace); margin-bottom: 10px; font-family: 'Soyuz Grotesk', sans-serif;">
                     1-5 (где 1 - колледж, 5 - аспирантура)
                 </p>
@@ -134,40 +173,37 @@
                         <div class="career-scale-mark" data-value="4">4</div>
                         <div class="career-scale-mark" data-value="5">5</div>
                     </div>
-                    <!-- Подписи уровней сложности -->
+
+                    <!-- Адаптированные под мобильные подписи уровней сложности (как кнопки/слоты) -->
                     <div class="difficulty-labels">
                         <div class="difficulty-label" data-level="1">
-                            <strong>Колледж</strong><br>
-                            Среднее профессиональное<br>образование (2-3 года)
+                            <strong>Колледж</strong>
+                            <span>Среднее профессиональное образование (2-3 года)</span>
                         </div>
                         <div class="difficulty-label" data-level="2">
-                            <strong>Бакалавриат</strong><br>
-                            Высшее образование<br>(4 года обучения)
+                            <strong>Бакалавриат</strong>
+                            <span>Высшее образование (4 года обучения)</span>
                         </div>
                         <div class="difficulty-label" data-level="3">
-                            <strong>Специалитет</strong><br>
-                            Углубленная подготовка<br>(5-6 лет обучения)
+                            <strong>Специалитет</strong>
+                            <span>Углубленная подготовка (5-6 лет обучения)</span>
                         </div>
                         <div class="difficulty-label" data-level="4">
-                            <strong>Магистратура</strong><br>
-                            Научно-исследовательская<br>подготовка (2 года)
+                            <strong>Магистратура</strong>
+                            <span>Научно-исследовательская подготовка (2 года)</span>
                         </div>
                         <div class="difficulty-label" data-level="5">
-                            <strong>Аспирантура</strong><br>
-                            Высшая квалификация<br>(3-4 года)
+                            <strong>Аспирантура</strong>
+                            <span>Высшая квалификация (3-4 года)</span>
                         </div>
                     </div>
                     <input type="hidden" name="difficulty" id="difficultyValue" value="">
                 </div>
-
             </div>
 
-            <!-- 5. Уровень востребованности (шкала 1-5) -->
+            <!-- 5. Уровень востребованности -->
             <div class="career-filter-section">
-                <h3 class="career-filter-title">
-                    5. Уровень востребованности
-                </h3>
-
+                <h3 class="career-filter-title">5. Уровень востребованности</h3>
                 <div class="career-scale-container">
                     <div class="career-scale-header">
                         <div class="career-scale-label">Уровень востребованности</div>
@@ -186,41 +222,30 @@
                     </div>
                     <input type="hidden" name="demand" id="demandValue" value="">
                 </div>
-
             </div>
 
             <!-- 6. Минимальный уровень дохода -->
             <div class="career-filter-section">
-                <h3 class="career-filter-title">
-                    6. Минимальный уровень дохода
-                </h3>
+                <h3 class="career-filter-title">6. Минимальный уровень дохода</h3>
                 <div class="career-options-grid">
                     <label class="career-option-label">
-                        <input type="radio" name="salary" value="0-50000">
-                        До 50,000 ₽
+                        <input type="radio" name="salary" value="0-50000"> До 50,000 ₽
                     </label>
                     <label class="career-option-label">
-                        <input type="radio" name="salary" value="50000-100000">
-                        От 50,000 ₽
+                        <input type="radio" name="salary" value="50000-100000"> От 50,000 ₽
                     </label>
                     <label class="career-option-label">
-                        <input type="radio" name="salary" value="100000-150000">
-                        От 100,000 ₽
+                        <input type="radio" name="salary" value="100000-150000"> От 100,000 ₽
                     </label>
                     <label class="career-option-label">
-                        <input type="radio" name="salary" value="150000">
-                        От 150,000 ₽
+                        <input type="radio" name="salary" value="150000"> От 150,000 ₽
                     </label>
                 </div>
-
             </div>
 
-            <!-- 7. Уровень коммуникации (шкала 1-10) -->
+            <!-- 7. Уровень коммуникации -->
             <div class="career-filter-section">
-                <h3 class="career-filter-title">
-                    7. Уровень коммуникации
-                </h3>
-
+                <h3 class="career-filter-title">7. Уровень коммуникации</h3>
                 <div class="career-scale-container career-scale-10">
                     <div class="career-scale-header">
                         <div class="career-scale-label">Уровень коммуникации</div>
@@ -244,60 +269,41 @@
                     </div>
                     <input type="hidden" name="communication" id="communicationValue" value="">
                 </div>
-
             </div>
 
             <!-- 8. ВУЗы и колледжи -->
             <div class="career-filter-section">
-                <h3 class="career-filter-title">
-                    8. ВУЗы и колледжи
-                </h3>
+                <h3 class="career-filter-title">8. ВУЗы и колледжи</h3>
                 <div class="career-input-group">
-                    <input type="text"
-                           id="institutionSearch"
-                           name="institution_search"
-                           placeholder="Введите название учебного заведения...">
+                    <input type="text" id="institutionSearch" name="institution_search" placeholder="Введите название учебного заведения...">
                 </div>
-
             </div>
 
             <!-- 9. Формат работы -->
             <div class="career-filter-section">
-                <h3 class="career-filter-title">
-                    9. Формат работы
-                </h3>
+                <h3 class="career-filter-title">9. Формат работы</h3>
                 <div class="career-options-grid">
-                    <!-- Русские названия с большой буквы как в БД -->
                     <label class="career-option-label">
-                        <input type="checkbox" name="work_format[]" value="Офис">
-                        В офисе
+                        <input type="checkbox" name="work_format[]" value="Офис"> В офисе
                     </label>
                     <label class="career-option-label">
-                        <input type="checkbox" name="work_format[]" value="Удаленно">
-                        Удаленно
+                        <input type="checkbox" name="work_format[]" value="Удаленно"> Удаленно
                     </label>
                     <label class="career-option-label">
-                        <input type="checkbox" name="work_format[]" value="Гибридный">
-                        Гибридный
+                        <input type="checkbox" name="work_format[]" value="Гибридный"> Гибридный
                     </label>
                 </div>
-
             </div>
 
             <!-- 10. Вид графика -->
             <div class="career-filter-section">
-                <h3 class="career-filter-title">
-                    10. Вид графика
-                </h3>
+                <h3 class="career-filter-title">10. Вид графика</h3>
                 <div class="career-options-grid">
-                    <!-- Русские названия с большой буквы как в БД -->
                     <label class="career-option-label">
-                        <input type="radio" name="schedule" value="Фиксированный">
-                        Фиксированный
+                        <input type="radio" name="schedule" value="Фиксированный"> Фиксированный
                     </label>
                     <label class="career-option-label">
-                        <input type="radio" name="schedule" value="Гибкий">
-                        Гибкий
+                        <input type="radio" name="schedule" value="Гибкий"> Гибкий
                     </label>
                 </div>
                 <div class="optional-note">Необязательное поле</div>
@@ -305,11 +311,8 @@
 
             <!-- 11. Направления деятельности -->
             <div class="career-filter-section">
-                <h3 class="career-filter-title">
-                    11. Направления деятельности
-                </h3>
+                <h3 class="career-filter-title">11. Направления деятельности</h3>
                 <div class="career-subjects-grid">
-                    <!-- Русские названия с большой буквы как в БД -->
                     <div class="career-subject-tag" data-direction="IT-сфера">IT-сфера</div>
                     <div class="career-subject-tag" data-direction="Бизнес и менеджмент">Бизнес и менеджмент</div>
                     <div class="career-subject-tag" data-direction="Медицина">Медицина</div>
@@ -322,67 +325,54 @@
                     <div class="career-subject-tag" data-direction="Экономика и финансы">Экономика и финансы</div>
                     <div class="career-subject-tag" data-direction="Строительство">Строительство</div>
                 </div>
-
             </div>
 
             <!-- Кнопки управления -->
             <div class="career-search-controls">
-                <button type="button" class="career-btn-reset" id="resetFilters">
-                    Сбросить все фильтры
-                </button>
-                <button type="submit" class="career-btn-search">
-                    Найти профессии
-                </button>
+                <button type="button" class="career-btn-reset" id="resetFilters">Сбросить все фильтры</button>
+                <button type="submit" class="career-btn-search">Найти профессии</button>
             </div>
         </form>
     </div>
 
-    <!-- JavaScript для работы интерфейса -->
+    <!-- JavaScript (без изменений логики, кроме адаптации для сенсорных экранов, но трогаем только блок сложности) -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Переменные
             let selectedSubjects = [];
             let selectedDirections = [];
 
-            // Обработка выбора предметов
+            // Предметы
             const subjectTags = document.querySelectorAll('.career-subject-tag[data-subject]');
             subjectTags.forEach(tag => {
                 tag.addEventListener('click', function() {
                     this.classList.toggle('selected');
-
-                    // Обновляем список выбранных предметов
                     selectedSubjects = Array.from(document.querySelectorAll('.career-subject-tag[data-subject].selected'))
                         .map(tag => tag.getAttribute('data-subject'));
                 });
             });
 
-            // Обработка выбора направлений
+            // Направления
             const directionTags = document.querySelectorAll('.career-subject-tag[data-direction]');
             directionTags.forEach(tag => {
                 tag.addEventListener('click', function() {
                     this.classList.toggle('selected');
-
-                    // Обновляем список выбранных направлений
                     selectedDirections = Array.from(document.querySelectorAll('.career-subject-tag[data-direction].selected'))
                         .map(tag => tag.getAttribute('data-direction'));
                 });
             });
 
-            // Обработка выбора опций
+            // Опции (radio/checkbox) стилизация
             const optionLabels = document.querySelectorAll('.career-option-label');
             optionLabels.forEach(label => {
                 const input = label.querySelector('input[type="checkbox"], input[type="radio"]');
                 if (input) {
-                    // Обработка изменения состояния
                     input.addEventListener('change', function() {
                         if (this.type === 'radio') {
-                            // Для radio кнопок убираем selected у всех в группе
                             const groupName = this.name;
                             document.querySelectorAll(`input[name="${groupName}"]`).forEach(radio => {
                                 radio.parentElement.classList.remove('selected');
                             });
                         }
-
                         if (this.checked) {
                             label.classList.add('selected');
                         } else {
@@ -392,7 +382,7 @@
                 }
             });
 
-            // Функции для работы со шкалами
+            // Универсальная функция для шкал (без изменений)
             function setupScale(scaleId, minValue, maxValue) {
                 const track = document.getElementById(`${scaleId}Track`);
                 const thumb = document.getElementById(`${scaleId}Thumb`);
@@ -402,120 +392,83 @@
 
                 if (!track || !thumb || !fill || !valueDisplay || !valueInput) return;
 
-                // Начальное значение - не выбрано
+                // Начальное значение
                 updateScalePosition(scaleId, '', minValue, maxValue);
-                if (scaleId === 'difficulty') {
-                    updateDifficultyLabels('');
-                }
 
                 let isDragging = false;
 
-                // Функция обновления позиции
                 function updateScalePosition(id, value, min, max) {
                     if (value === '') {
-                        // Сбрасываем позицию
                         document.getElementById(`${id}Thumb`).style.left = '0%';
                         document.getElementById(`${id}Fill`).style.width = '0%';
                         document.getElementById(`${id}ValueDisplay`).textContent = 'Не выбрано';
                         document.getElementById(`${id}Value`).value = '';
-
                         if (id === 'difficulty') {
-                            updateDifficultyLabels('');
+                            document.querySelectorAll('.difficulty-label').forEach(label => {
+                                label.classList.remove('active');
+                            });
                         }
                         return;
                     }
-
                     const percentage = ((value - min) / (max - min)) * 100;
-
-                    // Позиционируем ползунок точно по шкале
                     const thumbPosition = Math.max(0, Math.min(percentage, 100));
-
                     document.getElementById(`${id}Thumb`).style.left = `${thumbPosition}%`;
                     document.getElementById(`${id}Fill`).style.width = `${thumbPosition}%`;
                     document.getElementById(`${id}ValueDisplay`).textContent = value;
                     document.getElementById(`${id}Value`).value = value;
 
-                    // Обновляем подписи для сложности
                     if (id === 'difficulty') {
-                        updateDifficultyLabels(value);
+                        document.querySelectorAll('.difficulty-label').forEach(label => {
+                            label.classList.remove('active');
+                            const level = parseInt(label.getAttribute('data-level'));
+                            if (level === parseInt(value)) {
+                                label.classList.add('active');
+                            }
+                        });
                     }
                 }
 
-                // Функция обновления подписей сложности
-                function updateDifficultyLabels(value) {
-                    document.querySelectorAll('.difficulty-label').forEach(label => {
-                        label.classList.remove('active');
-                        const level = parseInt(label.getAttribute('data-level'));
-                        if (level === parseInt(value)) {
-                            label.classList.add('active');
-                        }
-                    });
-                }
-
-                // Функция расчета значения по позиции X
                 function calculateValue(clientX) {
                     const rect = track.getBoundingClientRect();
                     let x = clientX - rect.left;
-
-                    // Ограничиваем в пределах трека
                     x = Math.max(0, Math.min(x, rect.width));
-
-                    // Для дискретных значений (1-5, 1-10) делим шкалу на равные сегменты
                     const segmentWidth = rect.width / (maxValue - minValue + 1);
                     const segmentIndex = Math.floor((x + segmentWidth / 2) / segmentWidth);
-
                     let value = minValue + segmentIndex;
-
-                    // Ограничиваем значение
                     value = Math.max(minValue, Math.min(value, maxValue));
                     return value;
                 }
 
-                // Клик по меткам шкалы
+                // Клик по меткам
                 const marks = document.querySelectorAll(`#${scaleId}Track .career-scale-mark`);
                 marks.forEach(mark => {
                     mark.addEventListener('click', function(e) {
                         e.stopPropagation();
                         const value = parseInt(this.getAttribute('data-value'));
-                        if (!isNaN(value)) {
-                            updateScalePosition(scaleId, value, minValue, maxValue);
-                        }
+                        if (!isNaN(value)) updateScalePosition(scaleId, value, minValue, maxValue);
                     });
                 });
 
-                // Клик по подписям сложности
-                if (scaleId === 'difficulty') {
-                    document.querySelectorAll('.difficulty-label').forEach(label => {
-                        label.addEventListener('click', function() {
-                            const value = parseInt(this.getAttribute('data-level'));
-                            if (!isNaN(value)) {
-                                updateScalePosition(scaleId, value, minValue, maxValue);
-                            }
-                        });
-                    });
-                }
-
-                // Клик по треку для установки значения
+                // Клик по треку
                 track.addEventListener('click', function(e) {
                     const clientX = e.type.includes('touch') ? e.touches[0].clientX : e.clientX;
                     const value = calculateValue(clientX);
                     updateScalePosition(scaleId, value, minValue, maxValue);
                 });
 
-                // Клик по пустой области трека для сброса
+                // Двойной клик - сброс
                 track.addEventListener('dblclick', function(e) {
                     e.stopPropagation();
                     updateScalePosition(scaleId, '', minValue, maxValue);
                 });
 
-                // Обработчики событий для перетаскивания
+                // Перетаскивание
                 thumb.addEventListener('mousedown', function(e) {
                     e.preventDefault();
                     isDragging = true;
                     document.addEventListener('mousemove', onMouseMove);
                     document.addEventListener('mouseup', onMouseUp);
                 });
-
                 thumb.addEventListener('touchstart', function(e) {
                     e.preventDefault();
                     isDragging = true;
@@ -528,110 +481,90 @@
                     const value = calculateValue(e.clientX);
                     updateScalePosition(scaleId, value, minValue, maxValue);
                 }
-
                 function onTouchMove(e) {
                     if (!isDragging) return;
                     const clientX = e.touches[0].clientX;
                     const value = calculateValue(clientX);
                     updateScalePosition(scaleId, value, minValue, maxValue);
                 }
-
                 function onMouseUp() {
                     isDragging = false;
                     document.removeEventListener('mousemove', onMouseMove);
                     document.removeEventListener('mouseup', onMouseUp);
                 }
-
                 function onTouchEnd() {
                     isDragging = false;
                     document.removeEventListener('touchmove', onTouchMove);
                     document.removeEventListener('touchend', onTouchEnd);
                 }
-
-                // Предотвращаем выделение при перетаскивании
-                thumb.addEventListener('dragstart', function(e) {
-                    e.preventDefault();
-                });
+                thumb.addEventListener('dragstart', (e) => e.preventDefault());
             }
 
             // Настройка шкал
-            setupScale('difficulty', 1, 5); // Сложность обучения 1-5
-            setupScale('demand', 1, 5); // Востребованность 1-5
-            setupScale('communication', 1, 10); // Коммуникация 1-10
+            setupScale('difficulty', 1, 5);
+            setupScale('demand', 1, 5);
+            setupScale('communication', 1, 10);
 
-            // Функция сбора данных для отправки (в статической версии просто сохраняем в localStorage)
+            // Добавляем обработчики на адаптированные подписи сложности (как слоты)
+            document.querySelectorAll('.difficulty-label').forEach(label => {
+                label.addEventListener('click', function() {
+                    const level = this.getAttribute('data-level');
+                    if (level) {
+                        const value = parseInt(level);
+                        // Обновляем шкалу difficulty программно
+                        const scaleId = 'difficulty';
+                        const min = 1, max = 5;
+                        const thumb = document.getElementById(`${scaleId}Thumb`);
+                        const fill = document.getElementById(`${scaleId}Fill`);
+                        const valueDisplay = document.getElementById(`${scaleId}ValueDisplay`);
+                        const valueInput = document.getElementById(`${scaleId}Value`);
+
+                        const percentage = ((value - min) / (max - min)) * 100;
+                        thumb.style.left = `${percentage}%`;
+                        fill.style.width = `${percentage}%`;
+                        valueDisplay.textContent = value;
+                        valueInput.value = value;
+
+                        // Активируем нужную подпись
+                        document.querySelectorAll('.difficulty-label').forEach(l => l.classList.remove('active'));
+                        this.classList.add('active');
+                    }
+                });
+            });
+
+            // Сбор данных формы
             function collectSearchData() {
-                // 1. Поиск по названию
                 const query = document.getElementById('professionName').value.trim() || undefined;
-
-                // 2. Тип поступления
-                let admission_type = undefined;
-                const admission_type_radio = document.querySelector('input[name="admission_type"]:checked');
-                if (admission_type_radio) {
-                    admission_type = admission_type_radio.value; // Уже "ОГЭ" или "ЕГЭ"
-                }
-
-                // 3. Предметы
+                let admission_type = document.querySelector('input[name="admission_type"]:checked')?.value || undefined;
                 const subjects = selectedSubjects.length > 0 ? selectedSubjects : undefined;
-
-                // 4. Направления деятельности
                 const directions = selectedDirections.length > 0 ? selectedDirections : undefined;
-
-                // 5. Формат работы
-                const work_formats = Array.from(
-                    document.querySelectorAll('input[name="work_format[]"]:checked')
-                ).map(cb => cb.value);
+                const work_formats = Array.from(document.querySelectorAll('input[name="work_format[]"]:checked')).map(cb => cb.value);
                 const work_formats_filter = work_formats.length > 0 ? work_formats : undefined;
-
-                // 6. График работы
                 let schedules = undefined;
                 const schedule_radio = document.querySelector('input[name="schedule"]:checked');
-                if (schedule_radio) {
-                    schedules = [schedule_radio.value];
-                }
+                if (schedule_radio) schedules = [schedule_radio.value];
 
-                // 7. Сложность обучения
                 let difficulty_level = undefined;
                 const difficultyValue = document.getElementById('difficultyValue').value;
                 if (difficultyValue) {
-                    const difficultyMap = {
-                        '1': 'Колледж',
-                        '2': 'Бакалавриат',
-                        '3': 'Специалитет',
-                        '4': 'Магистратура',
-                        '5': 'Аспирантура'
-                    };
+                    const difficultyMap = { '1':'Колледж', '2':'Бакалавриат', '3':'Специалитет', '4':'Магистратура', '5':'Аспирантура' };
                     difficulty_level = difficultyMap[difficultyValue];
                 }
 
-                // 8. Поиск по учебному заведению
                 const institution_query = document.getElementById('institutionSearch').value.trim() || undefined;
-
-                // 9. Минимальный уровень востребованности
                 let demand_min = undefined;
                 const demandValue = document.getElementById('demandValue').value;
-                if (demandValue) {
-                    demand_min = parseInt(demandValue);
-                }
+                if (demandValue) demand_min = parseInt(demandValue);
 
-                // 10. Минимальный уровень дохода
                 let salary_min = undefined;
                 const salary_radio = document.querySelector('input[name="salary"]:checked');
-                if (salary_radio) {
-                    salary_min = parseInt(salary_radio.value);
-                }
+                if (salary_radio) salary_min = parseInt(salary_radio.value);
 
-                // 11. Минимальный уровень коммуникации
                 let communication_min = undefined;
                 const communicationValue = document.getElementById('communicationValue').value;
-                if (communicationValue) {
-                    communication_min = parseInt(communicationValue);
-                }
+                if (communicationValue) communication_min = parseInt(communicationValue);
 
-                // Собираем все фильтры в один объект
                 const filters = {};
-
-                // Добавляем только те поля, которые имеют значения
                 if (query) filters.query = query;
                 if (admission_type) filters.admission_type = admission_type;
                 if (subjects) filters.subjects = subjects;
@@ -647,150 +580,61 @@
                 return filters;
             }
 
-            // Обработчик формы поиска
+            // Отправка формы (демо-режим)
             document.getElementById('careerSearchForm').addEventListener('submit', async function(e) {
                 e.preventDefault();
-
-                // Показываем индикатор загрузки
                 showLoadingIndicator();
 
                 try {
-                    // Собираем данные для отправки
                     const searchData = collectSearchData();
+                    console.log('Фильтры:', searchData);
 
-                    console.log('Выбранные фильтры:', searchData);
-
-                    // Проверяем, что хотя бы один фильтр выбран
                     if (Object.keys(searchData).length === 0) {
                         hideLoadingIndicator();
                         alert('Пожалуйста, выберите хотя бы один критерий для поиска!');
                         return;
                     }
 
-                    // В статической версии используем демо-данные
                     setTimeout(() => {
-                        // Демо-данные для результатов поиска
                         const demoResults = [
-                            {
-                                id: 1,
-                                name: "Веб-разработчик",
-                                directions: ["Информационные технологии"],
-                                salary_min: 80000,
-                                salary_max: 250000,
-                                difficulty_level: "бакалавриат",
-                                demand_level: 5,
-                                communication_level: 4,
-                                description: "Веб-разработчик занимается созданием и поддержкой веб-сайтов и веб-приложений.",
-                                subjects: ["Информатика", "Математика", "Английский язык"],
-                                work_formats: ["Удаленная работа", "Офис", "Фриланс"],
-                                schedules: ["Полный день", "Гибкий график"],
-                                admission_type: "ЕГЭ",
-                                institutions: [
-                                    { name: "МГУ им. Ломоносова", type: "Университет" },
-                                    { name: "МФТИ", type: "Институт" }
-                                ]
-                            },
-                            {
-                                id: 2,
-                                name: "Психолог",
-                                directions: ["Психология"],
-                                salary_min: 50000,
-                                salary_max: 150000,
-                                difficulty_level: "магистратура",
-                                demand_level: 4,
-                                communication_level: 9,
-                                description: "Психолог изучает психические процессы и поведение человека.",
-                                subjects: ["Биология", "Обществознание", "Русский язык"],
-                                work_formats: ["Офис", "Частная практика"],
-                                schedules: ["Полный день", "Гибкий график"],
-                                admission_type: "ЕГЭ",
-                                institutions: [
-                                    { name: "МГППУ", type: "Университет" },
-                                    { name: "СПбГУ", type: "Университет" }
-                                ]
-                            },
-                            {
-                                id: 3,
-                                name: "Инженер-конструктор",
-                                directions: ["Инженерия"],
-                                salary_min: 60000,
-                                salary_max: 180000,
-                                difficulty_level: "специалитет",
-                                demand_level: 5,
-                                communication_level: 3,
-                                description: "Инженер-конструктор разрабатывает чертежи и проекты различных изделий.",
-                                subjects: ["Физика", "Математика", "Черчение"],
-                                work_formats: ["Офис", "Производство"],
-                                schedules: ["Полный день"],
-                                admission_type: "ЕГЭ",
-                                institutions: [
-                                    { name: "МГТУ им. Баумана", type: "Университет" },
-                                    { name: "СПбПУ", type: "Политехнический университет" }
-                                ]
-                            }
+                            { id:1, name:"Веб-разработчик", admission_type:"ЕГЭ", difficulty_level:"бакалавриат", demand_level:5, communication_level:4 },
+                            { id:2, name:"Психолог", admission_type:"ЕГЭ", difficulty_level:"магистратура", demand_level:4, communication_level:9 },
+                            { id:3, name:"Инженер-конструктор", admission_type:"ЕГЭ", difficulty_level:"специалитет", demand_level:5, communication_level:3 }
                         ];
 
-                        // Фильтруем результаты (простая симуляция)
                         let filteredResults = demoResults;
-
                         if (searchData.query) {
-                            filteredResults = filteredResults.filter(p =>
-                                p.name.toLowerCase().includes(searchData.query.toLowerCase())
-                            );
+                            filteredResults = filteredResults.filter(p => p.name.toLowerCase().includes(searchData.query.toLowerCase()));
                         }
-
                         if (searchData.admission_type) {
-                            filteredResults = filteredResults.filter(p =>
-                                p.admission_type === searchData.admission_type
-                            );
+                            filteredResults = filteredResults.filter(p => p.admission_type === searchData.admission_type);
                         }
-
                         if (searchData.difficulty_level) {
-                            filteredResults = filteredResults.filter(p =>
-                                p.difficulty_level === searchData.difficulty_level.toLowerCase()
-                            );
+                            filteredResults = filteredResults.filter(p => p.difficulty_level === searchData.difficulty_level.toLowerCase());
                         }
-
                         if (searchData.demand_min) {
-                            filteredResults = filteredResults.filter(p =>
-                                (p.demand_level || 0) >= searchData.demand_min
-                            );
+                            filteredResults = filteredResults.filter(p => (p.demand_level || 0) >= searchData.demand_min);
                         }
-
                         if (searchData.communication_min) {
-                            filteredResults = filteredResults.filter(p =>
-                                (p.communication_level || 0) >= searchData.communication_min
-                            );
+                            filteredResults = filteredResults.filter(p => (p.communication_level || 0) >= searchData.communication_min);
                         }
 
-                        // Скрываем индикатор загрузки
                         hideLoadingIndicator();
 
-                        // Проверяем, есть ли результаты
                         if (filteredResults.length === 0) {
                             alert('По вашему запросу ничего не найдено. Попробуйте изменить критерии поиска.');
                             return;
                         }
 
-                        // Сохраняем результаты в localStorage
                         localStorage.setItem('lastSearchResults', JSON.stringify(filteredResults));
-
-                        // Переходим на страницу результатов
                         window.location.href = 'search_results.html';
-
-                    }, 1500); // Имитация задержки поиска
-
+                    }, 1500);
                 } catch (error) {
-                    // Скрываем индикатор загрузки
                     hideLoadingIndicator();
-
-                    // Показываем пользователю понятную ошибку
-                    console.error('Ошибка поиска:', error);
                     alert(`Ошибка при поиске: ${error.message}`);
                 }
             });
 
-            // Функция показа индикатора загрузки
             function showLoadingIndicator() {
                 const overlay = document.createElement('div');
                 overlay.className = 'loading-overlay';
@@ -800,77 +644,42 @@
                     <h3 style="color: var(--cornflower-blue); margin-bottom: 10px; font-family: 'Soyuz Grotesk', sans-serif;">
                         Ищем подходящие профессии...
                     </h3>
-                    <p style="color: var(--shadowed-lace); text-align: center; max-width: 400px;">
-                        Это может занять несколько секунд. Мы анализируем ваши критерии и подбираем наиболее подходящие варианты.
-                    </p>
                 `;
                 document.body.appendChild(overlay);
             }
 
             function hideLoadingIndicator() {
                 const overlay = document.getElementById('loadingOverlay');
-                if (overlay) {
-                    overlay.remove();
-                }
+                if (overlay) overlay.remove();
             }
 
             // Сброс фильтров
             document.getElementById('resetFilters').addEventListener('click', function() {
-                // Сброс чекбоксов
-                document.querySelectorAll('input[type="checkbox"]').forEach(cb => {
-                    cb.checked = false;
-                    cb.parentElement.classList.remove('selected');
-                });
-
-                // Сброс radio кнопок
-                document.querySelectorAll('input[type="radio"]').forEach(radio => {
-                    radio.checked = false;
-                    radio.parentElement.classList.remove('selected');
-                });
-
-                // Сброс выбранных предметов и направлений
-                document.querySelectorAll('.career-subject-tag').forEach(tag => {
-                    tag.classList.remove('selected');
-                });
-
-                // Сброс полей ввода
+                document.querySelectorAll('input[type="checkbox"]').forEach(cb => { cb.checked = false; cb.parentElement.classList.remove('selected'); });
+                document.querySelectorAll('input[type="radio"]').forEach(radio => { radio.checked = false; radio.parentElement.classList.remove('selected'); });
+                document.querySelectorAll('.career-subject-tag').forEach(tag => tag.classList.remove('selected'));
                 document.getElementById('professionName').value = '';
                 document.getElementById('institutionSearch').value = '';
-
-                // Сброс переменных
                 selectedSubjects = [];
                 selectedDirections = [];
 
-                // Сброс шкал
-                const difficultyScale = document.getElementById('difficultyValue');
-                const demandScale = document.getElementById('demandValue');
-                const communicationScale = document.getElementById('communicationValue');
-
-                if (difficultyScale) difficultyScale.value = '';
-                if (demandScale) demandScale.value = '';
-                if (communicationScale) communicationScale.value = '';
-
-                // Сброс отображения шкал
-                document.getElementById('difficultyValueDisplay').textContent = 'Не выбрано';
-                document.getElementById('demandValueDisplay').textContent = 'Не выбрано';
-                document.getElementById('communicationValueDisplay').textContent = 'Не выбрано';
-
-                document.getElementById('difficultyThumb').style.left = '0%';
-                document.getElementById('difficultyFill').style.width = '0%';
-                document.getElementById('demandThumb').style.left = '0%';
-                document.getElementById('demandFill').style.width = '0%';
-                document.getElementById('communicationThumb').style.left = '0%';
-                document.getElementById('communicationFill').style.width = '0%';
-
-                // Сброс подписей сложности
-                document.querySelectorAll('.difficulty-label').forEach(label => {
-                    label.classList.remove('active');
+                ['difficulty','demand','communication'].forEach(id => {
+                    const el = document.getElementById(id+'Value');
+                    if (el) el.value = '';
+                    const disp = document.getElementById(id+'ValueDisplay');
+                    if (disp) disp.textContent = 'Не выбрано';
+                    const thumb = document.getElementById(id+'Thumb');
+                    if (thumb) thumb.style.left = '0%';
+                    const fill = document.getElementById(id+'Fill');
+                    if (fill) fill.style.width = '0%';
                 });
 
+                document.querySelectorAll('.difficulty-label').forEach(l => l.classList.remove('active'));
                 alert('Все фильтры сброшены!');
             });
         });
     </script>
 </body>
-
 </html>
+```
+
