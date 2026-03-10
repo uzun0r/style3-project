@@ -3,7 +3,7 @@
 /* 0. ШРИФТЫ */
 @font-face {
     font-family: 'Educational Gothic';
-    src: url('../static/fonts/EDUCATIONALGOTHIC-REGULAR.OTF') format('opentype');
+    src: url('fonts/EDUCATIONALGOTHIC-REGULAR.OTF') format('opentype');
     font-weight: 400;
     font-style: normal;
     font-display: swap;
@@ -11,7 +11,7 @@
 
 @font-face {
     font-family: 'Mulish';
-    src: url('../static/fonts/Mulish.ttf') format('truetype');
+    src: url('fonts/Mulish.ttf') format('truetype');
     font-weight: 400;
     font-style: normal;
     font-display: swap;
@@ -19,7 +19,7 @@
 
 @font-face {
     font-family: 'Mulish';
-    src: url('../static/fonts/Mulish.ttf') format('truetype');
+    src: url('fonts/Mulish.ttf') format('truetype');
     font-weight: 700;
     font-style: normal;
     font-display: swap;
@@ -1228,4 +1228,5 @@
     .career-subjects-grid {
         grid-template-columns: 1fr;
     }
+
 }
